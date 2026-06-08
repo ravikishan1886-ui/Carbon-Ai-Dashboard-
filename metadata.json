@@ -1,0 +1,6 @@
+{
+  "name": "Carbon Footprint Coach",
+  "description": "Calculate and analyze your day's carbon footprint using Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
