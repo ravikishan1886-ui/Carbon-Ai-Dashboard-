@@ -561,7 +561,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
       </nav>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col p-4 sm:p-9 max-w-7xl mx-auto w-full overflow-y-auto">
+      <main id="main-content" className="flex-1 flex flex-col p-4 pb-20 sm:p-9 max-w-7xl mx-auto w-full overflow-y-auto">
         
         {/* Responsive Header block matching Vibrant design styles */}
         <header className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-6 pb-5 border-b border-emerald-150/50 dark:border-slate-800">
@@ -731,7 +731,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                 >
                   {loading ? (
                     <>
-                      <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
@@ -771,7 +771,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
 
                 {/* SVG Graph visualizer */}
                 <div className="relative w-full overflow-hidden flex flex-col items-center">
-                  <svg viewBox={`0 0 ${svgW} ${svgH}`} className="w-full h-auto bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl p-1.5 overflow-visible">
+                  <svg viewBox={`0 0 ${svgW} ${svgH}`} role="img" aria-label="Carbon footprint emission trends chart over time" className="w-full h-auto bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl p-1.5 overflow-visible">
                     
                     {/* Gridlines */}
                     {[0, 0.25, 0.5, 0.75, 1].map((ratio, index) => {
@@ -1172,7 +1172,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
               {chatLoading && (
                 <div className="flex justify-start">
                   <div className="bg-white dark:bg-slate-850 border border-slate-100 dark:border-slate-800 rounded-2xl rounded-bl-none p-4 max-w-[85%] shadow-xs flex items-center gap-2 text-xs text-slate-400">
-                    <svg className="animate-spin h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
@@ -1355,7 +1355,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
           </div>
         )}
 
-      </div>
+      </main>
 
       {/* ==================== HIGH FIDELITY EXPORT PDF CERTIFICATE MODAL ==================== */}
       <AnimatePresence>
@@ -1465,6 +1465,70 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
           </div>
         )}
       </AnimatePresence>
+
+      {/* Mobile Bottom Navigation Bar - Accessible touch nodes (height 44px+) */}
+      <nav 
+        id="mobile-navigation" 
+        aria-label="Mobile Navigation Bar" 
+        className={`fixed bottom-0 left-0 right-0 h-16 sm:hidden flex justify-around items-center z-45 print:hidden shadow-2xl border-t ${
+          isDarkMode 
+            ? 'bg-slate-900 border-slate-800 text-slate-400' 
+            : 'bg-[#064e3b] border-emerald-900 text-emerald-100/70'
+        }`}
+      >
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          aria-label="Active Carbon Monitor Dashboard"
+          className={`flex flex-col items-center justify-center w-16 h-12 rounded-xl transition-all ${
+            activeTab === 'dashboard'
+              ? 'text-emerald-400 font-extrabold scale-110'
+              : 'hover:text-white'
+          }`}
+        >
+          <BarChart2 className="w-5 h-5" />
+          <span className="text-[9px] mt-0.5 tracking-tight">Panel</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('chat')}
+          aria-label="Sustaina AI Coach Chat"
+          className={`flex flex-col items-center justify-center w-16 h-12 rounded-xl transition-all relative ${
+            activeTab === 'chat'
+              ? 'text-emerald-400 font-extrabold scale-110'
+              : 'hover:text-white'
+          }`}
+        >
+          <MessageSquare className="w-5 h-5" />
+          <span className="absolute top-1 right-3 w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
+          <span className="text-[9px] mt-0.5 tracking-tight">Coach</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('rewards')}
+          aria-label="Rewards achievement club"
+          className={`flex flex-col items-center justify-center w-16 h-12 rounded-xl transition-all ${
+            activeTab === 'rewards'
+              ? 'text-emerald-400 font-extrabold scale-110'
+              : 'hover:text-white'
+          }`}
+        >
+          <Trophy className="w-5 h-5" />
+          <span className="text-[9px] mt-0.5 tracking-tight">Club</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('settings')}
+          aria-label="Settings parameters console"
+          className={`flex flex-col items-center justify-center w-16 h-12 rounded-xl transition-all ${
+            activeTab === 'settings'
+              ? 'text-emerald-400 font-extrabold scale-110'
+              : 'hover:text-white'
+          }`}
+        >
+          <Settings className="w-5 h-5" />
+          <span className="text-[9px] mt-0.5 tracking-tight">Admin</span>
+        </button>
+      </nav>
 
       {/* Embedded Printable Report styles to support clean PDF rendering on window.print() */}
       <style>{`
