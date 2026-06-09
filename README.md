@@ -1,28 +1,54 @@
 # 🌱 Carbon AI Dashboard - Awareness Platform
 
+[![React](https://shields.io)](https://react.dev)
+[![TypeScript](https://shields.io)](https://typescriptlang.org)
+[![Vercel](https://shields.io)](https://vercel.com)
+[![Gemini AI](https://shields.io)](https://google.com)
+
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
 ## 📸 Dashboard Preview
 ![Carbon AI Dashboard](https://unsplash.com)
-*(Tip: Replace this link with your actual Vercel screenshot URL later if you'd like!)*
+
+## 🏆 Core Highlights
+* **Built for Competition:** Engineered explicitly for PromptWars Virtual Challenge 3.
+* **Intelligent LLM Engine:** Powered by Google's cutting-edge `gemini-2.5-flash` model.
+* **Rigid Type Safety:** Strict structured JSON schema validation handles all pipeline data safely.
+* **Real-Time Scoring:** Conversational logging converts daily activities instantly into accurate carbon numbers.
 
 ## 🌍 Problem Statement
 Many individuals want to reduce their environmental impact but lack accessible, automated tools to measure dynamic daily choices. **Carbon AI Dashboard** bridges this gap by converting everyday natural language descriptions of meals, commutes, and energy usage into concrete carbon metrics and targeted actionable recommendations.
 
 ## 🌐 Live Links
 * **Deployed Live Interface:** https://vercel.app
-* **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-
+* **Public GitHub Repository:** https://github.com
 
 ## ✨ Core Features
 * **Natural Language Tracking:** Users can type out their day naturally instead of navigating tedious form dropdowns.
 * **Intelligent JSON Schema Analysis:** Utilizes `gemini-2.5-flash` with strict structured output schema validation.
 * **Personalized Reductions:** Pinpoints high-emission daily tasks and generates contextual green alternatives.
 
-## 🏗️ Architecture Workflow
+## 🏗️ Technical Architecture Flow
 ```text
-[ User Action Input ] ➔ [ Node Backend API ] ➔ [ Gemini 2.5 Flash Engine ] 
-                                                           │
-[ Real-time UI Charts ] 🗲 [ Strict JSON Schema Validation ] ┘
+  User Data Input
+         │
+         ▼
+   React Frontend
+         │
+         ▼
+   Node Backend API
+         │
+         ▼
+ Gemini 2.5 Flash Engine
+         │
+         ▼
+ JSON Schema Validation
+         │
+         ▼
+ Carbon Analytics Calculation
+         │
+         ▼
+Dashboard Insights Generated
 ```
 
 ## 🛠️ Technical Stack
@@ -35,7 +61,7 @@ Many individuals want to reduce their environmental impact but lack accessible, 
 
 1. **Clone your personal workspace repository:**
    ```bash
-   git clone https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-.git
+   git clone https://github.com.git
    cd Carbon-Ai-Dashboard-
    ```
 
@@ -65,8 +91,11 @@ Many individuals want to reduce their environmental impact but lack accessible, 
 * **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
 
 ## 👨💻 Author
-* **Ravi Kishan**
-* **GitHub Profile:** [github.com/ravikishan1886-ui](https://github.com/ravikishan1886-ui)
+* **Ranveer Kumar Singh**
+* **GitHub Profile:** [https://github.com](https://github.com)
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
+
+---
+⭐ *If you found this project or implementation useful, please consider starring the repository!*
