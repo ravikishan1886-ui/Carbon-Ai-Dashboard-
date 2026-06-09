@@ -13,15 +13,25 @@ async function startServer() {
   // Middleware to parse JSON request bodies
   app.use(express.json());
 
-  // Initialize Google Gen AI client with developer-provided key
-  const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-    httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build',
+  // Lazy initialization of the Google Gen AI client with developer-provided key
+  let aiClient: GoogleGenAI | null = null;
+  function getAi(): GoogleGenAI {
+    if (!aiClient) {
+      const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        throw new Error("GEMINI_API_KEY environment variable is not configured. Please add your Gemini API Key in the Settings menu.");
       }
+      aiClient = new GoogleGenAI({
+        apiKey: apiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
     }
-  });
+    return aiClient;
+  }
 
   // API route for Carbon Footprint calculation and coach tips
   app.post("/api/eco-coach", async (req, res) => {
@@ -32,6 +42,8 @@ async function startServer() {
       if (!taskText) {
         return res.status(400).json({ error: "No activity description provided." });
       }
+
+      const ai = getAi();
 
       // Explicit structured JSON schema definition for Gemini model response
       const ecoSchema = {
@@ -111,6 +123,8 @@ async function startServer() {
       if (!messages || !Array.isArray(messages)) {
         return res.status(400).json({ error: "Invalid discussion messages array." });
       }
+
+      const ai = getAi();
 
       // Format messages in the precise format required by the latest SDK
       const contents = messages.map((m: any) => ({

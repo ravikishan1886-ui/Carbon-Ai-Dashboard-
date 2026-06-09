@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { getScoreDetails, calculatePoints } from './utils';
 import { 
   Leaf, 
   CheckCircle, 
@@ -347,14 +348,6 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
     }
   };
 
-  // Helper score categorization
-  const getScoreDetails = (score: number) => {
-    if (score >= 90) return { title: 'Eco Hero 🌱', color: 'text-emerald-500 bg-emerald-50 dark:bg-emerald-950/45 border-emerald-400', banner: 'bg-emerald-600', text: 'Stellar work! Your day exhibits near-zero emissions. You are a model for carbon neutrality.' };
-    if (score >= 70) return { title: 'Green Champion ♻️', color: 'text-teal-500 bg-teal-50 dark:bg-teal-950/45 border-teal-400', banner: 'bg-teal-600', text: 'Excellent! Highly sustainable choices, but can be improved with small commuting adaptations.' };
-    if (score >= 50) return { title: 'Improving 🌍', color: 'text-amber-500 bg-amber-50 dark:bg-amber-950/45 border-amber-400', banner: 'bg-amber-500', text: 'Reasonable, yet your daily routine relies on several high-carbon assets like beef burgers or SUV driving.' };
-    return { title: 'Needs Attention ⚠️', color: 'text-rose-500 bg-rose-50 dark:bg-rose-950/45 border-rose-400', banner: 'bg-rose-500', text: 'High emissions detected. Urgently adopt active travel modes, plant nutrition, or smart household heating.' };
-  };
-
   // Badges completion evaluation
   const badges = [
     {
@@ -391,7 +384,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
   const completedTipsCount = completedTips.filter(Boolean).length;
   const completedGoalsCount = completedWeeklyGoals.filter(Boolean).length;
   const achievedBadgesCount = badges.filter(b => b.achieved).length;
-  const ecoPointsCount = 2100 + (completedTipsCount * 120) + (completedGoalsCount * 250) + (achievedBadgesCount * 400);
+  const ecoPointsCount = calculatePoints(completedTipsCount, completedGoalsCount, achievedBadgesCount);
 
   // SVG Chart points computation
   const svgW = 520;
@@ -490,6 +483,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                 : 'hover:text-white hover:bg-white/10'
             }`}
             title="Dashboard Monitor"
+            aria-label="Access Carbon Footprint Dashboard"
           >
             <BarChart2 className="w-5 h-5" />
             <span className="text-[9px] mt-0.5 tracking-tighter">Panel</span>
@@ -503,7 +497,8 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                 ? 'bg-emerald-500 text-white shadow-md font-bold scale-[1.08]' 
                 : 'hover:text-white hover:bg-white/10'
             }`}
-            title="Sustaina AI Coach Coach"
+            title="Sustaina AI Sustainability Coach"
+            aria-label="Sustaina AI Sustainability Coach Chat"
           >
             <div className="relative">
               <MessageSquare className="w-5 h-5" />
@@ -522,6 +517,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                 : 'hover:text-white hover:bg-white/10'
             }`}
             title="Eco Achievements"
+            aria-label="Eco Club Rewards and Achievements"
           >
             <Trophy className="w-5 h-5" />
             <span className="text-[9px] mt-0.5 tracking-tighter">Club</span>
@@ -536,6 +532,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                 : 'hover:text-white hover:bg-white/10'
             }`}
             title="Carbon parameters"
+            aria-label="Carbon settings and variables"
           >
             <Settings className="w-5 h-5" />
             <span className="text-[9px] mt-0.5 tracking-tighter">Admin</span>
@@ -552,6 +549,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                 : 'bg-emerald-900 border-emerald-800 text-emerald-100 hover:bg-emerald-800'
             }`}
             title="Toggle color theme"
+            aria-label="Toggle light and dark color theme"
           >
             {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
@@ -626,26 +624,26 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
         {/* Quick responsive banner summary cards for rewards points context */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
           <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-emerald-100'} shadow-xs`}>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">Eco Club Points</p>
+            <p className="text-[10px] text-slate-600 dark:text-slate-400 font-extrabold uppercase tracking-widest">Eco Club Points</p>
             <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5" id="eco-points-display">
-              {ecoPointsCount.toLocaleString()} <span className="text-xs text-slate-400">PTS</span>
+              {ecoPointsCount.toLocaleString()} <span className="text-xs text-slate-500 dark:text-slate-400">PTS</span>
             </p>
           </div>
 
           <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-emerald-100'} shadow-xs`}>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">Daily Limit Cap</p>
-            <p className="text-2xl font-black text-emerald-900 dark:text-emerald-200 mt-0.5">5.0 <span className="text-xs text-slate-400">kg CO₂</span></p>
+            <p className="text-[10px] text-slate-600 dark:text-slate-400 font-extrabold uppercase tracking-widest">Daily Limit Cap</p>
+            <p className="text-2xl font-black text-emerald-900 dark:text-emerald-200 mt-0.5">5.0 <span className="text-xs text-slate-500 dark:text-slate-400">kg CO₂</span></p>
           </div>
 
           <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-emerald-100'} shadow-xs`}>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">Calculations Logged</p>
+            <p className="text-[10px] text-slate-600 dark:text-slate-400 font-extrabold uppercase tracking-widest">Calculations Logged</p>
             <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-0.5">
-              {history.length} <span className="text-xs text-slate-400">runs</span>
+              {history.length} <span className="text-xs text-slate-500 dark:text-slate-400">runs</span>
             </p>
           </div>
 
           <div className={`p-4 rounded-2xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-emerald-100'} shadow-xs`}>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-widest">Unlocked Badges</p>
+            <p className="text-[10px] text-slate-600 dark:text-slate-400 font-extrabold uppercase tracking-widest">Unlocked Badges</p>
             <p className="text-2xl font-black text-purple-600 dark:text-purple-400 mt-0.5">
               {achievedBadgesCount} / {badges.length}
             </p>
@@ -1048,17 +1046,26 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                             <li 
                               key={idx}
                               onClick={() => toggleWeeklyGoal(idx)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  e.preventDefault();
+                                  toggleWeeklyGoal(idx);
+                                }
+                              }}
+                              tabIndex={0}
+                              role="button"
+                              aria-label={`Toggle weekly goal: ${goal}`}
                               className={`flex items-start gap-2.5 p-3 rounded-xl border cursor-pointer transition-all ${
                                 completedWeeklyGoals[idx]
                                   ? 'bg-emerald-50/25 dark:bg-emerald-950/15 border-emerald-150 text-slate-400 line-through'
                                   : 'bg-white dark:bg-slate-950/50 border-slate-100 dark:border-slate-900 hover:border-emerald-250 hover:bg-emerald-50/10'
                               }`}
                             >
-                              <button className="shrink-0 mt-0.5">
+                              <span className="shrink-0 mt-0.5" aria-hidden="true">
                                 <CheckCircle className={`w-3.5 h-3.5 transition-all ${
                                   completedWeeklyGoals[idx] ? 'text-emerald-600 fill-emerald-100 dark:text-emerald-500' : 'text-slate-350'
                                 }`} />
-                              </button>
+                              </span>
                               <span className="text-[11.5px] leading-tight text-slate-600 dark:text-slate-300">{goal}</span>
                             </li>
                           ))}
