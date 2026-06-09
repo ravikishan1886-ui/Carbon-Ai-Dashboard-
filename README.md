@@ -1,20 +1,84 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Carbon AI Dashboard 🌱
 
-# Run and deploy your AI Studio app
+An AI-powered Carbon Footprint Awareness Platform that helps users track, understand, and reduce their environmental impact through personalized insights and actionable recommendations.
 
-This contains everything you need to run your app locally.
+## Problem Statement
 
-View your app in AI Studio: https://ai.studio/apps/da434dd9-66f8-409e-9a76-fc3dfb3db6c1
+Many people want to reduce their carbon footprint but lack clear visibility into how their daily activities contribute to emissions.
 
-## Run Locally
+Carbon AI Dashboard provides:
 
-**Prerequisites:**  Node.js
+- Carbon footprint tracking
+- Personalized reduction recommendations
+- AI-powered sustainability insights
+- Progress monitoring
+- Environmental awareness analytics
 
+## Features
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Carbon Calculator
+Calculate emissions from:
+- Transportation
+- Electricity usage
+- Food consumption
+- Waste generation
+
+### AI Sustainability Coach
+Users can ask:
+- How can I reduce my emissions?
+- What activities contribute most to my footprint?
+- Which habits should I improve?
+
+### Analytics Dashboard
+- Daily emissions
+- Monthly trends
+- Category-wise breakdown
+- Progress tracking
+
+### Action Suggestions
+- Energy saving tips
+- Sustainable transportation recommendations
+- Lifestyle improvement plans
+
+## Tech Stack
+
+- React
+- TypeScript
+- Gemini API
+- Tailwind CSS
+- Vite
+
+## Screenshots
+
+*(Screenshots can be captured and added directly to your repository structure)*
+
+## Deployed Live URL
+
+- **Live Preview:** [https://ais-pre-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app](https://ais-pre-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app)
+- **Development Preview:** [https://ais-dev-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app](https://ais-dev-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app)
+
+## Installation
+
+```bash
+npm install
+npm run dev
+```
+
+## Environment Variables
+
+Make sure to create a `.env` file in the root directory with:
+
+```env
+GEMINI_API_KEY=your_key_here
+```
+
+## Future Improvements
+
+- Community challenges
+- Carbon offset marketplace
+- Gamification system
+- Mobile application
+
+## Author
+
+Ravi Kishan
