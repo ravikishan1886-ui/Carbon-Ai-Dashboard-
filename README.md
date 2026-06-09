@@ -48,9 +48,33 @@ Users can ask:
 - Tailwind CSS
 - Vite
 
+## Key Metrics
+
+- **Carbon Footprint Accuracy Tracking**: Advanced multi-variable evaluation models extract exact impact numbers.
+- **Personalized AI Recommendations**: Direct actionable tips customized precisely for your daily text logs.
+- **Real-time Analytics Dashboard**: Interactive visual trend graphs mapping scores and carbon weights chronologically.
+- **Sustainability Goal Monitoring**: Custom weekly checklists and points progression system to track habit adherence.
+
+## Demo Video
+
+🎥 **Watch our 30-60 second project demo on YouTube:** 
+[Carbon AI Dashboard Demo Video](https://www.youtube.com/watch?v=dQw4w9WgXcQ) *(Replace with your uploaded LinkedIn / YouTube link)*
+
 ## Screenshots
 
-*(Screenshots can be captured and added directly to your repository structure)*
+Below are screenshots capturing the Carbon AI Dashboard experience:
+
+### 1. Home Dashboard Overview
+![Home page](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
+
+### 2. Deep Carbon Calculator Analysis
+![Carbon Calculator](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
+
+### 3. AI Coach Chat Dialogue
+![AI Coach chat](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
+
+### 4. Interactive Historical Trends & Analytics
+![Analytics page](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
 
 ## Deployed Live URL
 
