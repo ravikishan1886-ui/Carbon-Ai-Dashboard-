@@ -4,7 +4,7 @@ An intelligent, interactive web application built for **PromptWars Virtual: Chal
 
 ## 🚀 Live Links
 * **Deployed Live Interface:** https://carbon-ai-dashboard.vercel.app/
-* **Public GitHub Repository:** https://github.com
+* **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-.git
 
 ## ✨ Core Features
 * **Natural Language Tracking:** Users can log daily commutes, diet choices, and household energy habits using plain conversational text instead of complex forms.
