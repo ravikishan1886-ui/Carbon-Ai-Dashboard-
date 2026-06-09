@@ -1,27 +1,41 @@
 # 🌱 Carbon AI Dashboard - Awareness Platform
 
-An intelligent, interactive web application built for **PromptWars Virtual: Challenge 3**. This platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
+Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
-## 🚀 Live Links
-* **Deployed Live Interface:** https://carbon-ai-dashboard.vercel.app/
-* **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-.git
+## 📸 Dashboard Preview
+![Carbon AI Dashboard](https://unsplash.com)
+*(Tip: Replace this link with your actual Vercel screenshot URL later if you'd like!)*
+
+## 🌍 Problem Statement
+Many individuals want to reduce their environmental impact but lack accessible, automated tools to measure dynamic daily choices. **Carbon AI Dashboard** bridges this gap by converting everyday natural language descriptions of meals, commutes, and energy usage into concrete carbon metrics and targeted actionable recommendations.
+
+## 🌐 Live Links
+* **Deployed Live Interface:** https://vercel.app
+* **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-
 
 ## ✨ Core Features
-* **Natural Language Tracking:** Users can log daily commutes, diet choices, and household energy habits using plain conversational text instead of complex forms.
-* **Intelligent JSON Schema Analysis:** Utilizes `gemini-2.5-flash` with precise JSON schema validation (`responseSchema`) to calculate carbon footprint statistics securely.
-* **Personalized Reductions:** Dynamically extracts actionable green eco-coach metrics and recommendations targeted to specific high-emission tasks.
+* **Natural Language Tracking:** Users can type out their day naturally instead of navigating tedious form dropdowns.
+* **Intelligent JSON Schema Analysis:** Utilizes `gemini-2.5-flash` with strict structured output schema validation.
+* **Personalized Reductions:** Pinpoints high-emission daily tasks and generates contextual green alternatives.
+
+## 🏗️ Architecture Workflow
+```text
+[ User Action Input ] ➔ [ Node Backend API ] ➔ [ Gemini 2.5 Flash Engine ] 
+                                                           │
+[ Real-time UI Charts ] 🗲 [ Strict JSON Schema Validation ] ┘
+```
 
 ## 🛠️ Technical Stack
-* **Frontend UI:** React.js, Vite, TypeScript, Tailwind CSS
-* **AI Processing Engine:** Google Gen AI SDK (`@google/genai`)
-* **AI Foundation Model:** `gemini-2.5-flash`
-* **Cloud Hosting Platform:** Vercel
+* **Frontend Frame:** React.js, Vite, TypeScript, Tailwind CSS
+* **AI Processing SDK:** Google Gen AI SDK (`@google/genai`)
+* **Core Foundation Model:** `gemini-2.5-flash`
+* **Cloud Hosting:** Vercel
 
 ## ⚙️ Local Development Setup
 
 1. **Clone your personal workspace repository:**
    ```bash
-   git clone https://github.com.git
+   git clone https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-.git
    cd Carbon-Ai-Dashboard-
    ```
 
@@ -40,3 +54,19 @@ An intelligent, interactive web application built for **PromptWars Virtual: Chal
    ```bash
    npm run dev
    ```
+
+## 🚀 Future Roadmap
+* **Historical Analytics:** Add interactive databases to track carbon history over weeks and months.
+* **Gamified Goals:** Introduce community sustainability milestones and Net-Zero badges.
+* **Native Mobile App:** Package the layout into a cross-platform mobile utility.
+
+## 🏆 Competition Context
+* **Hackathon:** PromptWars Virtual — Main Challenge 3
+* **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
+
+## 👨💻 Author
+* **Ravi Kishan**
+* **GitHub Profile:** [github.com/ravikishan1886-ui](https://github.com/ravikishan1886-ui)
+
+## 📄 License
+This project is open-source and available under the [MIT License](LICENSE).
