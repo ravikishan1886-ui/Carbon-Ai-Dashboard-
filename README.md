@@ -1,14 +1,14 @@
 # 🌱 Carbon AI Dashboard - Awareness Platform
 
-![React](https://shields.io)
-![TypeScript](https://shields.io)
-![Vercel](https://shields.io)
-![Gemini](https://shields.io)
+[![React](https://shields.io)](https://react.dev)
+[![TypeScript](https://shields.io)](https://typescriptlang.org)
+[![Vercel](https://shields.io)](https://vercel.com)
+[![Gemini AI](https://shields.io)](https://google.com)
 
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
 ## 📸 Dashboard Preview
-https://carbon-ai-dashboard.vercel.app/
+![Carbon AI Dashboard](https://unsplash.com)
 
 ## 🏆 Core Highlights
 * **Built for Competition:** Engineered explicitly for PromptWars Virtual Challenge 3.
@@ -20,8 +20,8 @@ https://carbon-ai-dashboard.vercel.app/
 Many individuals want to reduce their environmental impact but lack accessible, automated tools to measure dynamic daily choices. **Carbon AI Dashboard** bridges this gap by converting everyday natural language descriptions of meals, commutes, and energy usage into concrete carbon metrics and targeted actionable recommendations.
 
 ## 🌐 Live Links
-* **Deployed Live Interface:** https://carbon-ai-dashboard.vercel.app/
-* **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-
+* **Deployed Live Interface:** https://vercel.app
+* **Public GitHub Repository:** https://github.com
 
 ## ✨ Core Features
 * **Natural Language Tracking:** Users can type out their day naturally instead of navigating tedious form dropdowns.
@@ -61,8 +61,8 @@ Dashboard Insights Generated
 
 1. **Clone your personal workspace repository:**
    ```bash
-   git clone https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-.git
-cd Carbon-Ai-Dashboard-
+   git clone https://github.com.git
+   cd Carbon-Ai-Dashboard-
    ```
 
 2. **Install node dependencies:**
@@ -91,8 +91,8 @@ cd Carbon-Ai-Dashboard-
 * **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
 
 ## 👨💻 Author
-* **Ravi Kishan**
-* **GitHub Profile:** https://github.com/ravikishan1886-ui
+* **Ranveer Kumar Singh**
+* **GitHub Profile:** [https://github.com](https://github.com)
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
