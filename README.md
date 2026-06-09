@@ -1,9 +1,9 @@
 # 🌱 Carbon AI Dashboard - Awareness Platform
 
-[![React](https://shields.io)](https://react.dev)
-[![TypeScript](https://shields.io)](https://typescriptlang.org)
-[![Vercel](https://shields.io)](https://vercel.com)
-[![Gemini AI](https://shields.io)](https://google.com)
+![React](https://shields.io)
+![TypeScript](https://shields.io)
+![Vercel](https://shields.io)
+![Gemini](https://shields.io)
 
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
