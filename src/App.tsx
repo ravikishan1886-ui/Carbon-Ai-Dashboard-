@@ -184,7 +184,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
 
   // Sync scroll on chat addition
   useEffect(() => {
-    if (messagesEndRef.current) {
+    if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [chatHistory, chatLoading]);
@@ -250,8 +250,8 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
       setCompletedWeeklyGoals([false, false, false]); // reset checkboxes for new goals
 
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || "An unexpected system error occurred during analysis.");
+      console.error("Gracefully handled error layout update:", err);
+      setError("Unable to fetch real-time footprint data. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -336,8 +336,8 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
         content: coachReply
       }]);
     } catch (err: any) {
-      console.error(err);
-      setChatError(err.message || "Failed to reach Sustaina Coach.");
+      console.error("Gracefully handled error layout update:", err);
+      setChatError("Unable to fetch real-time footprint data. Please try again.");
       setChatHistory(prev => [...prev, {
         id: `chat-${Date.now() + 2}`,
         role: 'model',
@@ -747,9 +747,13 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
               </div>
 
               {/* Progress Tracking Graph (Dynamic interactive SVG Line graph) */}
-              <div className={`p-5 sm:p-6 rounded-3xl border ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
-              } shadow-xs`}>
+              <section 
+                id="carbon-emission-trend"
+                aria-label="Carbon Emission Trend Section"
+                className={`p-5 sm:p-6 rounded-3xl border ${
+                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
+                } shadow-xs`}
+              >
                 <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-50 dark:border-slate-800">
                   <div className="flex items-center gap-1.5">
                     <div className="text-emerald-500 font-bold">📈</div>
@@ -880,12 +884,16 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                     )}
                   </AnimatePresence>
                 </div>
-              </div>
+              </section>
 
               {/* Achievements & badges Center overview */}
-              <div className={`p-5 sm:p-6 rounded-3xl border ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
-              } shadow-xs`}>
+              <section 
+                id="achievements-milestones"
+                aria-label="Achievements and Milestones Section"
+                className={`p-5 sm:p-6 rounded-3xl border ${
+                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
+                } shadow-xs`}
+              >
                 <h3 className="font-extrabold text-slate-900 dark:text-slate-100 text-sm mb-3 flex items-center gap-1">
                   <span>🏆</span> Achievements & Milestones
                 </h3>
@@ -918,16 +926,20 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
             </div>
 
             {/* RIGHT AREA: Report and Score widget gauge (5 columns) */}
             <div className="lg:col-span-5 flex flex-col gap-6 w-full">
               
-              <div className={`p-6 sm:p-7 rounded-3xl border-2 flex flex-col min-h-[460px] ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
-              } shadow-md`}>
+              <section 
+                id="carbon-logged-results"
+                aria-label="Logged Carbon Results and Analysis Section"
+                className={`p-6 sm:p-7 rounded-3xl border-2 flex flex-col min-h-[460px] ${
+                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
+                } shadow-md`}
+              >
                 
                 {/* Visualizer header */}
                 <div className="border-b border-slate-100 dark:border-slate-800 pb-3 flex items-center justify-between">
@@ -1118,7 +1130,7 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
                   </div>
                 )}
 
-              </div>
+              </section>
             </div>
           </div>
         )}

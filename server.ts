@@ -33,6 +33,60 @@ async function startServer() {
     return aiClient;
   }
 
+  // Helper for resilient generation with fallback and retries for 503/transient errors
+  async function generateContentWithRetry(
+    ai: GoogleGenAI,
+    params: {
+      model: string;
+      contents: any;
+      config?: any;
+    }
+  ): Promise<any> {
+    const modelsToTry = [params.model, "gemini-flash-latest"];
+    let lastError: any = null;
+
+    for (const currentModel of modelsToTry) {
+      let attempts = 3;
+      let delay = 300; // ms
+
+      for (let attempt = 1; attempt <= attempts; attempt++) {
+        try {
+          console.log(`[Gemini API] Requesting ${currentModel} (Attempt ${attempt}/${attempts})...`);
+          const response = await ai.models.generateContent({
+            model: currentModel,
+            contents: params.contents,
+            config: params.config,
+          });
+          return response;
+        } catch (error: any) {
+          lastError = error;
+          const errorMsg = String(error.message || error);
+          const isTransient = 
+            errorMsg.includes("503") || 
+            errorMsg.includes("UNAVAILABLE") || 
+            errorMsg.includes("high demand") || 
+            errorMsg.includes("overloaded") || 
+            errorMsg.includes("429") || 
+            errorMsg.includes("ResourceExhausted") ||
+            (error.status && [429, 503].includes(error.status));
+
+          console.warn(`[Gemini API] Error during model ${currentModel} execution (Attempt ${attempt}):`, errorMsg);
+
+          if (isTransient && attempt < attempts) {
+            console.log(`[Gemini API] Transient error detected. Retrying in ${delay}ms...`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+            delay *= 2; // exponential backoff
+          } else {
+            // Either not transient, or we ran out of attempts for this model
+            break;
+          }
+        }
+      }
+    }
+
+    throw lastError || new Error("Failed to generate content after retry attempts.");
+  }
+
   // API route for Carbon Footprint calculation and coach tips
   app.post("/api/eco-coach", async (req, res) => {
     try {
@@ -92,8 +146,8 @@ async function startServer() {
         ],
       };
 
-      // Call modern Gemini models with defined response schema
-      const response = await ai.models.generateContent({
+      // Call model with fallback and retry support via the API wrapper
+      const response = await generateContentWithRetry(ai, {
         model: 'gemini-3.5-flash',
         contents: `Analyze and calculate carbon footprint for the following activity or diary entry of a day: "${taskText}"`,
         config: {
@@ -137,7 +191,7 @@ Explain carbon concepts, respond to eco questions, suggest lifestyle changes, an
 Keep answers incredibly positive, practical, actionable, and visually formatted inside Markdown.
 Context on current carbon calculation: ${currentContext ? JSON.stringify(currentContext) : 'No calculation activity loaded yet.'}.`;
 
-      const response = await ai.models.generateContent({
+      const response = await generateContentWithRetry(ai, {
         model: 'gemini-3.5-flash',
         contents: contents,
         config: {
