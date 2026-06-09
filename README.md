@@ -8,7 +8,7 @@
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
 ## 📸 Dashboard Preview
-![Carbon AI Dashboard](https://unsplash.com)
+https://carbon-ai-dashboard.vercel.app/
 
 ## 🏆 Core Highlights
 * **Built for Competition:** Engineered explicitly for PromptWars Virtual Challenge 3.
@@ -87,8 +87,8 @@ Our solution is focused on the **Sustaina Eco Coach / Awareness Platform** verti
 * **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
 
 ## 👨💻 Author
-* **Ranveer Kumar Singh** / **Ravi Kishan**
-* **GitHub Profile:** [https://github.com](https://github.com)
+* **Ravi Kishan**
+* **GitHub Profile:** https://github.com/ravikishan1886-ui/
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
