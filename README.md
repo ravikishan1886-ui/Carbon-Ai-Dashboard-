@@ -10,7 +10,7 @@ Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals n
 Many individuals want to reduce their environmental impact but lack accessible, automated tools to measure dynamic daily choices. **Carbon AI Dashboard** bridges this gap by converting everyday natural language descriptions of meals, commutes, and energy usage into concrete carbon metrics and targeted actionable recommendations.
 
 ## 🌐 Live Links
-* **Deployed Live Interface:** https://vercel.app
+* **Deployed Live Interface:** https://carbon-ai-dashboard.vercel.app/
 * **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-
 
 ## ✨ Core Features
