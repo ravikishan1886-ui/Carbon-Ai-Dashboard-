@@ -3,7 +3,7 @@
 An intelligent, interactive web application built for **PromptWars Virtual: Challenge 3**. This platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
 ## 🚀 Live Links
-* **Deployed Live Interface:** [PASTE YOUR LIVE VERCEL URL HERE]
+* **Deployed Live Interface:** https://carbon-ai-dashboard.vercel.app/
 * **Public GitHub Repository:** https://github.com
 
 ## ✨ Core Features
