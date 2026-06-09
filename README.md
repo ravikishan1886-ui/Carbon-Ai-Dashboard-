@@ -1,108 +1,42 @@
-# Carbon AI Dashboard 🌱
+# 🌱 Carbon AI Dashboard - Awareness Platform
 
-An AI-powered Carbon Footprint Awareness Platform that helps users track, understand, and reduce their environmental impact through personalized insights and actionable recommendations.
+An intelligent, interactive web application built for **PromptWars Virtual: Challenge 3**. This platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
-## Problem Statement
+## 🚀 Live Links
+* **Deployed Live Interface:** [PASTE YOUR LIVE VERCEL URL HERE]
+* **Public GitHub Repository:** https://github.com
 
-Many people want to reduce their carbon footprint but lack clear visibility into how their daily activities contribute to emissions.
+## ✨ Core Features
+* **Natural Language Tracking:** Users can log daily commutes, diet choices, and household energy habits using plain conversational text instead of complex forms.
+* **Intelligent JSON Schema Analysis:** Utilizes `gemini-2.5-flash` with precise JSON schema validation (`responseSchema`) to calculate carbon footprint statistics securely.
+* **Personalized Reductions:** Dynamically extracts actionable green eco-coach metrics and recommendations targeted to specific high-emission tasks.
 
-Carbon AI Dashboard provides:
+## 🛠️ Technical Stack
+* **Frontend UI:** React.js, Vite, TypeScript, Tailwind CSS
+* **AI Processing Engine:** Google Gen AI SDK (`@google/genai`)
+* **AI Foundation Model:** `gemini-2.5-flash`
+* **Cloud Hosting Platform:** Vercel
 
-- Carbon footprint tracking
-- Personalized reduction recommendations
-- AI-powered sustainability insights
-- Progress monitoring
-- Environmental awareness analytics
+## ⚙️ Local Development Setup
 
-## Features
+1. **Clone your personal workspace repository:**
+   ```bash
+   git clone https://github.com.git
+   cd Carbon-Ai-Dashboard-
+   ```
 
-### Carbon Calculator
-Calculate emissions from:
-- Transportation
-- Electricity usage
-- Food consumption
-- Waste generation
+2. **Install node dependencies:**
+   ```bash
+   npm install
+   ```
 
-### AI Sustainability Coach
-Users can ask:
-- How can I reduce my emissions?
-- What activities contribute most to my footprint?
-- Which habits should I improve?
+3. **Configure your environmental API variables:**
+   Create a `.env.local` file in your root folder:
+   ```env
+   GEMINI_API_KEY=your_google_ai_studio_api_key_here
+   ```
 
-### Analytics Dashboard
-- Daily emissions
-- Monthly trends
-- Category-wise breakdown
-- Progress tracking
-
-### Action Suggestions
-- Energy saving tips
-- Sustainable transportation recommendations
-- Lifestyle improvement plans
-
-## Tech Stack
-
-- React
-- TypeScript
-- Gemini API
-- Tailwind CSS
-- Vite
-
-## Key Metrics
-
-- **Carbon Footprint Accuracy Tracking**: Advanced multi-variable evaluation models extract exact impact numbers.
-- **Personalized AI Recommendations**: Direct actionable tips customized precisely for your daily text logs.
-- **Real-time Analytics Dashboard**: Interactive visual trend graphs mapping scores and carbon weights chronologically.
-- **Sustainability Goal Monitoring**: Custom weekly checklists and points progression system to track habit adherence.
-
-## Demo Video
-
-🎥 **Watch our 30-60 second project demo on YouTube:** 
-[Carbon AI Dashboard Demo Video](https://www.youtube.com/watch?v=dQw4w9WgXcQ) *(Replace with your uploaded LinkedIn / YouTube link)*
-
-## Screenshots
-
-Below are screenshots capturing the Carbon AI Dashboard experience:
-
-### 1. Home Dashboard Overview
-![Home page](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
-
-### 2. Deep Carbon Calculator Analysis
-![Carbon Calculator](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
-
-### 3. AI Coach Chat Dialogue
-![AI Coach chat](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
-
-### 4. Interactive Historical Trends & Analytics
-![Analytics page](https://raw.githubusercontent.com/google/ai-studio-build/main/assets/readme_placeholder.png)
-
-## Deployed Live URL
-
-- **Live Preview:** [https://ais-pre-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app](https://ais-pre-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app)
-- **Development Preview:** [https://ais-dev-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app](https://ais-dev-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app)
-
-## Installation
-
-```bash
-npm install
-npm run dev
-```
-
-## Environment Variables
-
-Make sure to create a `.env` file in the root directory with:
-
-```env
-GEMINI_API_KEY=your_key_here
-```
-
-## Future Improvements
-
-- Community challenges
-- Carbon offset marketplace
-- Gamification system
-- Mobile application
-
-## Author
-
-Ravi Kishan
+4. **Launch development server preview:**
+   ```bash
+   npm run dev
+   ```
