@@ -8,7 +8,7 @@
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
 ## 📸 Dashboard Preview
-![Carbon AI Dashboard](https://unsplash.com)
+https://carbon-ai-dashboard.vercel.app/
 
 ## 🏆 Core Highlights
 * **Built for Competition:** Engineered explicitly for PromptWars Virtual Challenge 3.
@@ -20,8 +20,8 @@ Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals n
 Many individuals want to reduce their environmental impact but lack accessible, automated tools to measure dynamic daily choices. **Carbon AI Dashboard** bridges this gap by converting everyday natural language descriptions of meals, commutes, and energy usage into concrete carbon metrics and targeted actionable recommendations.
 
 ## 🌐 Live Links
-* **Deployed Live Interface:** https://vercel.app
-* **Public GitHub Repository:** https://github.com
+* **Deployed Live Interface:** https://carbon-ai-dashboard.vercel.app/
+* **Public GitHub Repository:** https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-
 
 ## ✨ Core Features
 * **Natural Language Tracking:** Users can type out their day naturally instead of navigating tedious form dropdowns.
@@ -61,8 +61,8 @@ Dashboard Insights Generated
 
 1. **Clone your personal workspace repository:**
    ```bash
-   git clone https://github.com.git
-   cd Carbon-Ai-Dashboard-
+   git clone https://github.com/ravikishan1886-ui/Carbon-Ai-Dashboard-.git
+cd Carbon-Ai-Dashboard-
    ```
 
 2. **Install node dependencies:**
@@ -91,8 +91,8 @@ Dashboard Insights Generated
 * **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
 
 ## 👨💻 Author
-* **Ranveer Kumar Singh**
-* **GitHub Profile:** [https://github.com](https://github.com)
+* **Ravi Kishan**
+* **GitHub Profile:** https://github.com/ravikishan1886-ui
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
