@@ -3,8 +3,7 @@
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
 ## 📸 Dashboard Preview
-![Carbon AI Dashboard](https://unsplash.com)
-*(Tip: Replace this link with your actual Vercel screenshot URL later if you'd like!)*
+https://carbon-ai-dashboard.vercel.app/
 
 ## 🌍 Problem Statement
 Many individuals want to reduce their environmental impact but lack accessible, automated tools to measure dynamic daily choices. **Carbon AI Dashboard** bridges this gap by converting everyday natural language descriptions of meals, commutes, and energy usage into concrete carbon metrics and targeted actionable recommendations.
