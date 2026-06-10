@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import { createServer as createViteServer } from "vite";
 import { EcoController } from "./server/controllers/ecoController";
@@ -16,6 +17,9 @@ app.use(helmet({
   contentSecurityPolicy: false,
   crossOriginEmbedderPolicy: false,
 }));
+
+// Allow secure cross-origin requests
+app.use(cors());
 
 // Set up JSON body payload parsing with safety boundaries
 app.use(express.json({ limit: "50kb" }));
@@ -57,7 +61,7 @@ async function start() {
   // Standalone server start execution only if executed directly
   if (process.env.NODE_ENV !== "test" && !process.env.VITEST) {
     app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Carbon AI fullstack server successfully running on port ${PORT}`);
+      console.warn(`Carbon AI fullstack server successfully running on port ${PORT}`);
     });
   }
 }

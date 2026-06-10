@@ -60,7 +60,9 @@ export class GeminiService {
         try {
           const response = await client.models.generateContent({
             model: currentModel,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             contents: contents as any,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             config: config as any,
           });
           return { text: response.text };

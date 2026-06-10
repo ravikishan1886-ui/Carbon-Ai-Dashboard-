@@ -1,32 +1,21 @@
-import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getScoreDetails, calculatePoints } from './utils';
 import { 
-  Leaf, 
   CheckCircle, 
   AlertTriangle, 
   RotateCcw, 
-  HelpCircle, 
   Sparkles,
   BarChart2,
   MessageSquare,
   Trophy,
   Settings,
   Flame,
-  ArrowRight,
   Sun,
   Moon,
-  Trash2,
-  Download,
-  Award,
-  TrendingDown,
-  Activity,
-  Send,
-  Zap,
-  Globe,
-  Plus
+  Download
 } from 'lucide-react';
-import { CarbonResult, HistoryEntry, ChatMessage, BadgeItem } from './types';
+import { CarbonResult, HistoryEntry, ChatMessage } from './types';
 import { HistoryChart } from './components/HistoryChart';
 
 import { ChatSection } from './components/ChatSection';
@@ -66,7 +55,6 @@ export default function App() {
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState<string>('');
   const [chatLoading, setChatLoading] = useState<boolean>(false);
-  const [chatError, setChatError] = useState<string | null>(null);
 
   // Export report visualization modal state
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
@@ -106,6 +94,7 @@ export default function App() {
       try {
         const parsedHistory = JSON.parse(savedHistory);
         if (Array.isArray(parsedHistory)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const sanitizedHistory = parsedHistory.map((item: any) => ({
             date: item.date || "Unknown",
             carbonKg: typeof item.carbonKg === 'number' ? item.carbonKg : (typeof item.carbon === 'number' ? item.carbon : (typeof item.estimatedCarbon === 'number' ? item.estimatedCarbon : 0)),
@@ -116,7 +105,7 @@ export default function App() {
         } else {
           setHistory(PRE_SEEDED_HISTORY);
         }
-      } catch (err) {
+      } catch {
         setHistory(PRE_SEEDED_HISTORY);
       }
     } else {
@@ -143,7 +132,7 @@ export default function App() {
           setResult(sanitizedResult);
           setCompletedTips(new Array(sanitizedResult.actionableTips?.length || 0).fill(false));
         }
-      } catch (e) {
+      } catch {
         localStorage.removeItem('last_carbon_result');
       }
     }
@@ -233,18 +222,13 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
       localStorage.setItem('carbon_history_store', JSON.stringify(updatedHistory));
       setCompletedWeeklyGoals([false, false, false]); // reset checkboxes for new goals
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Gracefully handled error layout update:", err);
       setError("Unable to fetch real-time footprint data. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
-
-  const toggleTip = (index: number) => {
-    const next = [...completedTips];
-    next[index] = !next[index];
-    setCompletedTips(next);
   };
 
   const toggleWeeklyGoal = (index: number) => {
@@ -277,7 +261,6 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
 
     const userMsgText = chatInput;
     setChatInput('');
-    setChatError(null);
 
     // Update with client message
     const userMessageObj: ChatMessage = {
@@ -319,9 +302,9 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
         role: 'model',
         content: coachReply
       }]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Gracefully handled error layout update:", err);
-      setChatError("Unable to fetch real-time footprint data. Please try again.");
       setChatHistory(prev => [...prev, {
         id: `chat-${Date.now() + 2}`,
         role: 'model',
@@ -369,24 +352,6 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
   const completedGoalsCount = completedWeeklyGoals.filter(Boolean).length;
   const achievedBadgesCount = badges.filter(b => b.achieved).length;
   const ecoPointsCount = calculatePoints(completedTipsCount, completedGoalsCount, achievedBadgesCount);
-
-  // SVG Chart points computation
-  const svgW = 520;
-  const svgH = 160;
-  const padL = 45;
-  const padR = 25;
-  const padT = 25;
-  const padB = 30;
-
-  const maxHistoryCarbon = Math.max(...history.map(h => typeof h.carbonKg === 'number' ? h.carbonKg : 0), 18);
-  const minHistoryCarbon = 0;
-
-  const chartPoints = history.map((entry, idx) => {
-    const x = padL + (idx / (history.length - 1 || 1)) * (svgW - padL - padR);
-    const carbonVal = typeof entry.carbonKg === 'number' ? entry.carbonKg : 0;
-    const y = svgH - padB - ((carbonVal - minHistoryCarbon) / (maxHistoryCarbon - minHistoryCarbon)) * (svgH - padT - padB);
-    return { x, y, ...entry, carbonKg: carbonVal };
-  });
 
   // Native Trigger window print styling for carbon report
   const triggerPrintReport = () => {
@@ -990,39 +955,33 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
 
         {/* ==================== TAB 2: COOPERATIVE AI CHAT COACH ==================== */}
         {activeTab === 'chat' && (
-          <Suspense fallback={<div className="p-8 text-center text-slate-500 font-mono text-sm">Initializing Sustaina...</div>}>
-            <ChatSection 
-              chatHistory={chatHistory}
-              chatInput={chatInput}
-              setChatInput={setChatInput}
-              chatLoading={chatLoading}
-              handleSendChat={handleSendChat}
-              result={result}
-              renderMarkdownText={renderMarkdownText}
-              messagesEndRef={messagesEndRef}
-            />
-          </Suspense>
+          <ChatSection 
+            chatHistory={chatHistory}
+            chatInput={chatInput}
+            setChatInput={setChatInput}
+            chatLoading={chatLoading}
+            handleSendChat={handleSendChat}
+            result={result}
+            renderMarkdownText={renderMarkdownText}
+            messagesEndRef={messagesEndRef}
+          />
         )}
 
         {/* ==================== TAB 3: ECO CLUB ACHIEVEMENTS TABLE ==================== */}
         {activeTab === 'rewards' && (
-          <Suspense fallback={<div className="p-8 text-center text-slate-500 font-mono text-sm">Calculating rewards tier...</div>}>
-            <RewardsSection 
-              isDarkMode={isDarkMode}
-              ecoPointsCount={ecoPointsCount}
-              badges={badges}
-              achievedBadgesCount={achievedBadgesCount}
-            />
-          </Suspense>
+          <RewardsSection 
+            isDarkMode={isDarkMode}
+            ecoPointsCount={ecoPointsCount}
+            badges={badges}
+            achievedBadgesCount={achievedBadgesCount}
+          />
         )}
 
         {/* ==================== TAB 4: SYSTEM CONFIGURATION SETTINGS ==================== */}
         {activeTab === 'settings' && (
-          <Suspense fallback={<div className="p-8 text-center text-slate-500 font-mono text-sm">Booting console config...</div>}>
-            <SettingsSection 
-              isDarkMode={isDarkMode}
-            />
-          </Suspense>
+          <SettingsSection 
+            isDarkMode={isDarkMode}
+          />
         )}
 
       </main>

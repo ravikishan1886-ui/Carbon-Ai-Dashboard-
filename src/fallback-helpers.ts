@@ -124,7 +124,8 @@ export function generateFallbackEcoResponse(activityText: string) {
  * @param currentContext - The background carbon footprints logged earlier.
  * @returns A structured chatbot response containing the text reply.
  */
-export function generateFallbackChatResponse(messages: any[], currentContext: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function generateFallbackChatResponse(messages: any[], _currentContext: any) {
   const lastUserMessage = [...messages].reverse().find(m => m.role === 'user')?.parts?.[0]?.text?.toLowerCase() || "";
   
   let reply = "Hello! I am Sustaina, your eco coach. Although the AI is currently seeing highly heavy demand, I can absolutely help you: reduce commuting emissions, plan a plant-rich diet, or optimize home energy conservation! What would you like to explore?";

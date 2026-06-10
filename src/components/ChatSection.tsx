@@ -1,5 +1,5 @@
 import React from "react";
-import { Send, Sparkles } from "lucide-react";
+import { Send } from "lucide-react";
 import { ChatMessage, CarbonResult } from "../types";
 
 export interface ChatSectionProps {
