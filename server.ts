@@ -12,6 +12,9 @@ dotenv.config();
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 
+// Trust reverse proxy (e.g. Cloud Run, Vercel, Nginx) for accurate IP-based rate limiting
+app.set("trust proxy", 1);
+
 // Set up security headers
 app.use(helmet({
   contentSecurityPolicy: false,
