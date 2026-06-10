@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { getScoreDetails, calculatePoints } from './utils';
 import { 
@@ -26,29 +26,13 @@ import {
   Globe,
   Plus
 } from 'lucide-react';
+import { CarbonResult, HistoryEntry, ChatMessage, BadgeItem } from './types';
+import { HistoryChart } from './components/HistoryChart';
 
-interface CarbonResult {
-  estimatedCarbonKg: number;
-  carbonScore: number;
-  analysis: string;
-  actionableTips: string[];
-  topEmissionSources: string[];
-  estimatedMonthlyReductionKg: number;
-  weeklyGoals: string[];
-}
+import { ChatSection } from './components/ChatSection';
+import { RewardsSection } from './components/RewardsSection';
+import { SettingsSection } from './components/SettingsSection';
 
-interface HistoryEntry {
-  date: string;
-  carbonKg: number;
-  score: number;
-  activity: string;
-}
-
-interface ChatMessage {
-  role: 'user' | 'model';
-  content: string;
-  id: string;
-}
 
 const PRE_SEEDED_HISTORY: HistoryEntry[] = [
   { date: "June 5", carbonKg: 12.8, score: 62, activity: "Drove 20km to office in an SUVs, had a standard beef burger for lunch." },
@@ -747,144 +731,13 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
               </div>
 
               {/* Progress Tracking Graph (Dynamic interactive SVG Line graph) */}
-              <section 
-                id="carbon-emission-trend"
-                aria-label="Carbon Emission Trend Section"
-                className={`p-5 sm:p-6 rounded-3xl border ${
-                  isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
-                } shadow-xs`}
-              >
-                <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-50 dark:border-slate-800">
-                  <div className="flex items-center gap-1.5">
-                    <div className="text-emerald-500 font-bold">📈</div>
-                    <div>
-                      <h3 className="font-extrabold text-emerald-950 dark:text-emerald-100 text-sm">Carbon Emission Trend Graph</h3>
-                      <p className="text-[10px] text-slate-400">Hover nodes to view exact metrics</p>
-                    </div>
-                  </div>
-
-                  <button 
-                    onClick={clearMetricsHistory}
-                    className="text-[10px] font-bold text-rose-500 hover:underline flex items-center gap-1 cursor-pointer bg-rose-50 dark:bg-rose-950/35 px-2 py-1 rounded"
-                    title="Reset back to default lines"
-                  >
-                    <Trash2 className="w-3 h-3 text-rose-500" />
-                    Reset Logs
-                  </button>
-                </div>
-
-                {/* SVG Graph visualizer */}
-                <div className="relative w-full overflow-hidden flex flex-col items-center">
-                  <svg viewBox={`0 0 ${svgW} ${svgH}`} role="img" aria-label="Carbon footprint emission trends chart over time" className="w-full h-auto bg-slate-50/50 dark:bg-slate-950/20 rounded-2xl p-1.5 overflow-visible">
-                    
-                    {/* Gridlines */}
-                    {[0, 0.25, 0.5, 0.75, 1].map((ratio, index) => {
-                      const yPos = padT + ratio * (svgH - padT - padB);
-                      const carbonLabel = (maxHistoryCarbon - ratio * (maxHistoryCarbon - minHistoryCarbon)).toFixed(1);
-                      return (
-                        <g key={index} className="opacity-40">
-                          <line 
-                            x1={padL} 
-                            y1={yPos} 
-                            x2={svgW - padR} 
-                            y2={yPos} 
-                            stroke={isDarkMode ? "#334155" : "#e2e8f0"} 
-                            strokeWidth="1" 
-                            strokeDasharray="4 4"
-                          />
-                          <text 
-                            x={padL - 8} 
-                            y={yPos + 4} 
-                            className="text-[9px] font-mono font-bold fill-slate-400 text-right" 
-                            textAnchor="end"
-                          >
-                            {carbonLabel}
-                          </text>
-                        </g>
-                      );
-                    })}
-
-                    {/* Baseline daily Neutral target marker */}
-                    <g className="opacity-90">
-                      <line 
-                        x1={padL} 
-                        y1={svgH - padB - (5.0 / maxHistoryCarbon) * (svgH - padT - padB)} 
-                        x2={svgW - padR} 
-                        y2={svgH - padB - (5.0 / maxHistoryCarbon) * (svgH - padT - padB)} 
-                        stroke="#10b981" 
-                        strokeWidth="1.5" 
-                        strokeDasharray="2 2"
-                      />
-                      <text 
-                        x={svgW - padR - 5} 
-                        y={svgH - padB - (5.0 / maxHistoryCarbon) * (svgH - padT - padB) - 4} 
-                        className="text-[7px] font-black fill-emerald-600 uppercase tracking-widest text-right"
-                        textAnchor="end"
-                      >
-                        Target 5.0 kg
-                      </text>
-                    </g>
-
-                    {/* Line Chart path */}
-                    {chartPoints.length > 1 && (
-                      <path
-                        d={chartPoints.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ")}
-                        fill="none"
-                        stroke="#059669"
-                        strokeWidth="3.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="transition-all duration-300"
-                      />
-                    )}
-
-                    {/* Interactive Node Circles */}
-                    {chartPoints.map((pt, idx) => (
-                      <circle
-                        key={idx}
-                        cx={pt.x}
-                        cy={pt.y}
-                        r={hoveredPointIdx === idx ? 8 : 5}
-                        fill={pt.carbonKg <= 5.0 ? "#10b981" : pt.carbonKg <= 15.0 ? "#f59e0b" : "#ef4444"}
-                        stroke={isDarkMode ? "#0f172a" : "#ffffff"}
-                        strokeWidth="2"
-                        className="cursor-pointer transition-all duration-150"
-                        onMouseEnter={() => setCompletedTips && setHoveredPointIdx(idx)}
-                        onMouseLeave={() => setHoveredPointIdx(null)}
-                      />
-                    ))}
-
-                    {/* Date Horizontal labels */}
-                    {chartPoints.map((pt, idx) => (
-                      <text
-                        key={idx}
-                        x={pt.x}
-                        y={svgH - 10}
-                        className="text-[9px] font-extrabold fill-slate-400 text-center"
-                        textAnchor="middle"
-                      >
-                        {pt.date}
-                      </text>
-                    ))}
-                  </svg>
-
-                  {/* HTML Overlay Tooltip inside the chart */}
-                  <AnimatePresence>
-                    {hoveredPointIdx !== null && history[hoveredPointIdx] && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white p-2.5 rounded-xl border border-slate-700 shadow-xl max-w-xs text-xs z-25 text-left"
-                      >
-                        <p className="font-extrabold text-emerald-300">{history[hoveredPointIdx]?.date || 'Unknown'}</p>
-                        <p className="font-mono mt-0.5"><span className="text-red-400 font-bold">{(history[hoveredPointIdx]?.carbonKg ?? 0).toFixed(1)} kg CO₂</span> • Carbon Score: <span className="text-yellow-300 font-bold">{history[hoveredPointIdx]?.score ?? 0}</span></p>
-                        <p className="text-[10px] text-slate-300 leading-tight mt-1 line-clamp-2 italic">"{history[hoveredPointIdx]?.activity || ''}"</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </section>
+              <HistoryChart 
+                history={history}
+                isDarkMode={isDarkMode}
+                hoveredPointIdx={hoveredPointIdx}
+                setHoveredPointIdx={setHoveredPointIdx}
+                clearMetricsHistory={clearMetricsHistory}
+              />
 
               {/* Achievements & badges Center overview */}
               <section 
@@ -1137,234 +990,39 @@ How can I help you improve your **Carbon Score** today? Ask me anything about en
 
         {/* ==================== TAB 2: COOPERATIVE AI CHAT COACH ==================== */}
         {activeTab === 'chat' && (
-          <div className="bg-white border-2 border-emerald-100 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between h-[620px] max-w-4xl mx-auto w-full dark:bg-slate-900 dark:border-slate-800">
-            
-            {/* Chat header */}
-            <header className="p-4 bg-emerald-900 text-white flex items-center justify-between shadow-xs dark:bg-slate-950">
-              <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 bg-emerald-400 text-emerald-950 rounded-2xl flex items-center justify-center text-xl font-bold">
-                  S
-                </div>
-                <div>
-                  <h3 className="font-black text-sm tracking-tight">Sustaina Carbon Coach</h3>
-                  <p className="text-[10px] text-emerald-300 flex items-center gap-1 leading-none">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Ask anything about preservation, food energy, or transport
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-[10.5px] font-mono bg-emerald-800 dark:bg-slate-800 px-2.5 py-1 rounded">
-                Score sync context: {result ? `${result.carbonScore} PTS` : 'No run logged'}
-              </div>
-            </header>
-
-            {/* Chat Messages flow thread list */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-950/20">
-              {chatHistory.map((msg) => (
-                <div 
-                  key={msg.id} 
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div className={`max-w-[85%] rounded-2xl p-4 shadow-xs text-xs sm:text-sm leading-relaxed ${
-                    msg.role === 'user'
-                      ? 'bg-emerald-600 text-white rounded-br-none'
-                      : 'bg-white dark:bg-slate-850 border border-slate-100 dark:border-slate-800 text-slate-800 dark:text-slate-100 rounded-bl-none'
-                  }`}>
-                    {msg.role === 'model' ? (
-                      renderMarkdownText(msg.content)
-                    ) : (
-                      <p className="whitespace-pre-wrap">{msg.content}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-
-              {/* Loader response state */}
-              {chatLoading && (
-                <div className="flex justify-start">
-                  <div className="bg-white dark:bg-slate-850 border border-slate-100 dark:border-slate-800 rounded-2xl rounded-bl-none p-4 max-w-[85%] shadow-xs flex items-center gap-2 text-xs text-slate-400">
-                    <svg className="animate-spin h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    <span>Sustaina is compiling sustainable insights...</span>
-                  </div>
-                </div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Prompt questions shortcuts */}
-            <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-800 flex gap-2 overflow-x-auto text-[10.5px] whitespace-nowrap bg-white dark:bg-slate-900">
-              <button 
-                onClick={() => setChatInput("What daily activities contribute most to my footprint?")}
-                className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-800 cursor-pointer text-slate-500 hover:text-emerald-600 transition-all dark:text-slate-400"
-              >
-                🌍 Main drivers?
-              </button>
-              <button 
-                onClick={() => setChatInput("Give me simple hacks to save electricity at home")}
-                className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-800 cursor-pointer text-slate-500 hover:text-emerald-600 transition-all dark:text-slate-400"
-              >
-                💡 Save electricity hacks?
-              </button>
-              <button 
-                onClick={() => setChatInput("Are electric vehicles really zero carbon emissions?")}
-                className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-emerald-300 dark:hover:border-emerald-800 cursor-pointer text-slate-500 hover:text-emerald-600 transition-all dark:text-slate-400"
-              >
-                🚗 Electric vehicle truth?
-              </button>
-            </div>
-
-            {/* Chat user text submit */}
-            <form onSubmit={handleSendChat} className="p-3 bg-slate-50 border-t border-slate-150 dark:bg-slate-950 dark:border-slate-850 flex gap-2">
-              <input
-                type="text"
-                className="flex-1 p-3 text-xs sm:text-sm border border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 dark:text-white placeholder-slate-400"
-                placeholder="Ask Sustaina how to make cleaner environment choices..."
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-              />
-              <button 
-                type="submit"
-                disabled={chatLoading || !chatInput.trim()}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3 px-4 rounded-xl cursor-pointer shadow disabled:opacity-50 flex items-center justify-center text-xs"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-
-          </div>
+          <Suspense fallback={<div className="p-8 text-center text-slate-500 font-mono text-sm">Initializing Sustaina...</div>}>
+            <ChatSection 
+              chatHistory={chatHistory}
+              chatInput={chatInput}
+              setChatInput={setChatInput}
+              chatLoading={chatLoading}
+              handleSendChat={handleSendChat}
+              result={result}
+              renderMarkdownText={renderMarkdownText}
+              messagesEndRef={messagesEndRef}
+            />
+          </Suspense>
         )}
 
         {/* ==================== TAB 3: ECO CLUB ACHIEVEMENTS TABLE ==================== */}
         {activeTab === 'rewards' && (
-          <div className="max-w-4xl mx-auto w-full flex flex-col gap-6">
-            
-            <div className={`p-6 sm:p-8 rounded-3xl border ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
-            }`}>
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400 rounded-2xl flex items-center justify-center text-2xl">🏆</div>
-                <div>
-                  <h2 className="text-xl font-black text-emerald-950 dark:text-emerald-100">Eco Club Rewards Program</h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Complete activities, preserve daily targets, and finalize active carbon checks to earn points.</p>
-                </div>
-              </div>
-
-              {/* Points banner detail */}
-              <div className="mt-6 p-5 bg-gradient-to-r from-emerald-700 to-teal-800 text-white rounded-2xl flex items-center justify-between">
-                <div>
-                  <span className="text-xs uppercase tracking-widest text-emerald-250 block font-bold">Total Environmental Balance</span>
-                  <strong className="text-3xl sm:text-4xl font-black tracking-tight mt-1 block">{ecoPointsCount.toLocaleString()} PTS</strong>
-                </div>
-
-                <div className="text-right">
-                  <span className="text-[10px] bg-white/20 px-2 py-1 rounded uppercase tracking-wider font-extrabold text-white">Elite Green tier</span>
-                  <p className="text-[11px] mt-1 text-emerald-200">Next tier unlock at 5,000 PTS</p>
-                </div>
-              </div>
-
-              <section className="mt-8">
-                <h3 className="font-extrabold text-sm uppercase tracking-wider text-slate-400 mb-3">Rewards Rules & Achievements Guide</h3>
-                
-                <div className="space-y-3.5 text-xs">
-                  <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-950/20">
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">🎯</span>
-                      <div>
-                        <h4 className="font-bold text-slate-900 dark:text-emerald-100">Complete Carbon Calculations</h4>
-                        <p className="text-slate-450 dark:text-slate-500 leading-tight">Review daily travels or food portions with structured AI diagnostics.</p>
-                      </div>
-                    </div>
-                    <strong>120 PTS</strong>
-                  </div>
-
-                  <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-950/20">
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">⚡</span>
-                      <div>
-                        <h4 className="font-bold text-slate-900 dark:text-emerald-100">Preserve under 5.0 kg Target</h4>
-                        <p className="text-slate-450 dark:text-slate-500 leading-tight">Maintain direct ecological day results with zero fossil fuel emissions.</p>
-                      </div>
-                    </div>
-                    <strong>250 PTS</strong>
-                  </div>
-
-                  <div className="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-950/20">
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg">🚲</span>
-                      <div>
-                        <h4 className="font-bold text-slate-900 dark:text-emerald-100">Activate Commuter Shield badge</h4>
-                        <p className="text-slate-450 dark:text-slate-500 leading-tight">Switch standard vehicle commute with active cycling or electric subway travel.</p>
-                      </div>
-                    </div>
-                    <strong>400 PTS</strong>
-                  </div>
-                </div>
-              </section>
-
-            </div>
-
-          </div>
+          <Suspense fallback={<div className="p-8 text-center text-slate-500 font-mono text-sm">Calculating rewards tier...</div>}>
+            <RewardsSection 
+              isDarkMode={isDarkMode}
+              ecoPointsCount={ecoPointsCount}
+              badges={badges}
+              achievedBadgesCount={achievedBadgesCount}
+            />
+          </Suspense>
         )}
 
         {/* ==================== TAB 4: SYSTEM CONFIGURATION SETTINGS ==================== */}
         {activeTab === 'settings' && (
-          <div className="max-w-4xl mx-auto w-full flex flex-col gap-6">
-            
-            <div className={`p-6 sm:p-8 rounded-3xl border ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-emerald-100'
-            }`}>
-              <h2 className="text-xl font-black text-emerald-950 dark:text-emerald-100 mb-2">Systems Parameters Admin Panel</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">Manage API keys, environment settings, calculations parameters, and local data persistence.</p>
-
-              <div className="space-y-5">
-                
-                {/* Simulated API Secret Key */}
-                <div>
-                  <label className="block text-xs uppercase font-extrabold text-slate-400 mb-2">Google Gemini API key status</label>
-                  <div className="flex gap-2">
-                    <input 
-                      type="password" 
-                      value="********************************************************" 
-                      disabled 
-                      className="flex-1 p-3 border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs sm:text-sm rounded-xl text-slate-400"
-                    />
-                    <div className="bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold px-4 rounded-xl flex items-center justify-center">
-                      Configured
-                    </div>
-                  </div>
-                  <p className="text-[10.5px] text-slate-450 dark:text-slate-500 mt-1 leading-normal">API Keys are administered through the AI Studio Secrets menu. There is no custom UI allowed to override this directly inside the viewport.</p>
-                </div>
-
-                <hr className="border-slate-100 dark:border-slate-800" />
-
-                {/* Local storage actions reset */}
-                <div>
-                  <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100 mb-1">Clear Application state</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-3">Urgently clear tracking history, badges, and chat conversation records cached inside your browser storage.</p>
-                  
-                  <button 
-                    onClick={() => {
-                      if (confirm("Urgently wipe all local history calculations and clear cached dashboard items?")) {
-                        localStorage.clear();
-                        window.location.reload();
-                      }
-                    }}
-                    className="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/20 dark:hover:bg-rose-900/45 text-rose-600 hover:text-rose-700 dark:text-red-400 font-bold text-xs rounded-xl cursor-pointer"
-                  >
-                    Clear All Cached Storage
-                  </button>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
+          <Suspense fallback={<div className="p-8 text-center text-slate-500 font-mono text-sm">Booting console config...</div>}>
+            <SettingsSection 
+              isDarkMode={isDarkMode}
+            />
+          </Suspense>
         )}
 
       </main>
