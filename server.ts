@@ -10,7 +10,7 @@ import { EcoController } from "./server/controllers/ecoController";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 // Set up security headers
 app.use(helmet({
@@ -68,6 +68,7 @@ async function start() {
 
 start().catch((err) => {
   console.error("Critical server bootstrap error:", err);
+  process.exit(1); // Explicitly kill the process so Docker/systemd can restart it clean
 });
 
 export default app;
