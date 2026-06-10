@@ -176,7 +176,7 @@ Our unified application is fully containerized and production-ready for Google C
 
 ## 👨💻 Author
 * **Ranveer Kumar Singh** / **Ravi Kishan**
-* **GitHub Profile:** [https://github.com](https://github.com)
+* **GitHub Profile:** https://github.com/ravikishan1886-ui
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
