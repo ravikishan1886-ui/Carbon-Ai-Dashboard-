@@ -7,12 +7,36 @@
 
 Built for **PromptWars Virtual: Challenge 3**, this platform helps individuals naturally track, evaluate, and minimize their carbon footprint using structured generative insights powered by Google's Gemini AI.
 
-## 📸 Dashboard Preview
-![Carbon AI Dashboard](https://unsplash.com)
+## Screenshots
+
+### Dashboard
+![Dashboard](./src/assets/images/dashboard_mockup_1781072002843.png)
+
+### AI Chat
+![AI Chat](./src/assets/images/ai_chat_mockup_1781072017749.png)
+
+### Rewards System
+![Rewards System](./src/assets/images/rewards_system_mockup_1781072034366.png)
+
+## 📊 System Data Flow
+
+```text
+User
+ ↓
+React Frontend
+ ↓
+Express Server
+ ↓
+Gemini AI
+ ↓
+Carbon Analysis
+ ↓
+Dashboard
+```
 
 ## 🏆 Core Highlights
 * **Built for Competition:** Engineered explicitly for PromptWars Virtual Challenge 3.
-* **Intelligent LLM Engine:** Powered by Google's cutting-edge `gemini-2.5-flash` (using fast `gemini-3.5-flash` in production).
+* **Intelligent LLM Engine:** Powered by Google's designated `gemini-3.5-flash` model (matching the exact model execution in our codebase).
 * **Rigid Type Safety:** Strict structured JSON schema validation handles all pipeline data safely.
 * **Real-Time Scoring:** Conversational logging converts daily activities instantly into accurate carbon numbers.
 
@@ -45,8 +69,23 @@ Our solution is focused on the **Sustaina Eco Coach / Awareness Platform** verti
 * **Frontend Frame:** React.js, Vite, TypeScript, Tailwind CSS
 * **Test Engine:** Vitest Running Mode
 * **AI Processing SDK:** Google Gen AI SDK (`@google/genai`)
-* **Core Foundation Model:** `gemini-2.5-flash` / `gemini-3.5-flash`
+* **Core Foundation Model:** `gemini-3.5-flash` (The exact model declared in our codebase)
 * **Cloud Hosting:** Cloud Run / Vercel
+
+## 📁 Project Directory Layout
+
+The application code is cleanly modularized into React frontend components, localized business logic, TypeScript definitions, and robust server controllers/services:
+
+```text
+src/
+ ├── components/
+ ├── utils/
+ ├── types.ts
+
+server/
+ ├── controllers/
+ └── services/
+```
 
 ## ⚙️ Local Development Setup
 
@@ -76,6 +115,48 @@ Our solution is focused on the **Sustaina Eco Coach / Awareness Platform** verti
    ```bash
    npm run test
    ```
+
+## 🏗️ Production Build & Execution
+
+Confirm local deployment readiness or compile and boot the full-stack system locally:
+
+1. **Build the Application:**
+   Bundles client-side assets to `/dist` and compiles our custom server into `/dist/server.cjs` via `esbuild`:
+   ```bash
+   npm run build
+   ```
+
+2. **Start Server in Production Mode:**
+   Launches the bundled production-ready web application:
+   ```bash
+   npm run start
+   ```
+
+## 🌐 Deployment Instructions
+
+### Deploy to Google Cloud Run
+Our unified application is fully containerized and production-ready for Google Cloud. To deploy:
+1. Authenticate with the Google Cloud CLI (`gcloud auth login`).
+2. Deploy directly from the root directory to build and deploy the Cloud Run Container:
+   ```bash
+   gcloud run deploy carbon-ai-dashboard \
+     --source . \
+     --port 3000 \
+     --env-vars GEMINI_API_KEY="your_api_key_here"
+   ```
+3. Your service is now live under container-routed ingress using dynamic port variables (`PORT = process.env.PORT || 3000`).
+
+### Deploy to Vercel
+1. Install the Vercel CLI or link your repository to your Vercel Dashboard.
+2. Ensure you add the `GEMINI_API_KEY` to the project's Environment Variables.
+3. Configure the start command as `npm run start` or let the native dynamic build engine compile standard Express adapter middlewares.
+
+## 🌟 Impact (For Hack2Skill Judges)
+
+- **Encourages sustainable lifestyle choices**: Inspires rapid behavioral modification by displaying clear, daily ecological consequences.
+- **Makes carbon tracking conversational**: Decolocalizes standard carbon tracking by letting people use natural language diary inputs instead of repetitive multi-step mechanical forms.
+- **Uses AI to improve environmental awareness**: Delivers personalized, generative AI-guided tips tailored specifically to your unique habits.
+- **Gamifies eco-friendly habits**: Prompts a healthy rewards cycle through points accumulation, custom level tiers, and motivational badges.
 
 ## 🚀 Future Roadmap
 * **Historical Analytics:** Add interactive databases to track carbon history over weeks and months.
