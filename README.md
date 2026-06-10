@@ -1,4 +1,10 @@
+![Carbon AI Banner](./src/assets/images/carbon_ai_banner_1781078926805.png)
+
 # 🌱 Carbon AI Dashboard - Awareness Platform
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-green)](https://ais-pre-r3cfdttiygy2djsr66hqrb-886062476826.asia-southeast1.run.app)
+![Stars](https://img.shields.io/github/stars/ravikishan1886-ui/Carbon-Ai-Dashboard-)
+![Forks](https://img.shields.io/github/forks/ravikishan1886-ui/Carbon-Ai-Dashboard-)
 
 [![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg)](https://typescriptlang.org)
@@ -168,8 +174,8 @@ Our unified application is fully containerized and production-ready for Google C
 * **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
 
 ## 👨💻 Author
-* **Ravi Kishan**
-* **GitHub Profile:** https://github.com/ravikishan1886-ui
+* **Ranveer Kumar Singh** / **Ravi Kishan**
+* **GitHub Profile:** [https://github.com](https://github.com)
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
