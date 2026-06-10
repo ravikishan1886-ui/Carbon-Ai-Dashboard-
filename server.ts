@@ -179,6 +179,13 @@ async function startServer() {
         if (!textResponse) {
           throw new Error("No response text received from Gemini.");
         }
+        
+        // Sanitize any markdown code block wrappers (e.g. ```json) to guarantee valid JSON string parsing
+        let cleaned = textResponse.trim();
+        if (cleaned.startsWith("```")) {
+          cleaned = cleaned.replace(/^```(?:json)?\n?/i, "").replace(/\s*```$/, "").trim();
+          textResponse = cleaned;
+        }
       } catch (err: any) {
         console.log("[Eco Service] Processing completed via local procedures.");
         const fallbackObj = generateFallbackEcoResponse(taskText);
