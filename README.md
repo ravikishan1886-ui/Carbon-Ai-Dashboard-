@@ -148,6 +148,7 @@ Our unified application is fully containerized and production-ready for Google C
    gcloud run deploy carbon-ai-dashboard \
      --source . \
      --port 3000 \
+     --allow-unauthenticated \
      --env-vars GEMINI_API_KEY="your_api_key_here"
    ```
 3. Your service is now live under container-routed ingress using dynamic port variables (`PORT = process.env.PORT || 3000`).
@@ -174,8 +175,8 @@ Our unified application is fully containerized and production-ready for Google C
 * **Powered By:** Google AI Studio, Hack2Skill, & Google for Developers
 
 ## 👨💻 Author
-* **Ravi Kishan**
-* **GitHub Profile:** https://github.com/ravikishan1886-ui
+* **Ranveer Kumar Singh** / **Ravi Kishan**
+* **GitHub Profile:** [https://github.com](https://github.com)
 
 ## 📄 License
 This project is open-source and available under the [MIT License](LICENSE).
